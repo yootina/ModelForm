@@ -44,9 +44,30 @@ def create(request):
     return render(request, 'create.html', context)
         
 
-        
+
 def delete(request, id):
     article = Article.objects.get(id=id)
     article.delete()
 
     return redirect('articles:index')
+
+
+def update(request, id):
+    article = Article.objects.get(id=id)
+
+    
+    if request.method == 'POST':
+        # article = Article.objects.get(id=id)
+        # 기존 정보를 새로운 정보로 바꿔주기
+        form = ArticleForm(request.POST, instance=article)
+        if form is_valid():
+            form.save()
+            return redirect('articles:index')
+    else:
+        # article = Article.objects.get(id=id)
+        form = ArticleForm(instance=article)
+    
+    context = {
+        'form': form,
+    }
+    return render(request, 'update.html', context)
