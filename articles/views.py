@@ -41,7 +41,7 @@ def create(request):
     context = {
         'form': form,
     }
-    return render(request, 'create.html', context)
+    return render(request, 'form.html', context)
         
 
 
@@ -60,7 +60,7 @@ def update(request, id):
         # article = Article.objects.get(id=id)
         # 기존 정보를 새로운 정보로 바꿔주기
         form = ArticleForm(request.POST, instance=article)
-        if form is_valid():
+        if form.is_valid():
             form.save()
             return redirect('articles:index')
     else:
@@ -70,4 +70,4 @@ def update(request, id):
     context = {
         'form': form,
     }
-    return render(request, 'update.html', context)
+    return render(request, 'form.html', context)
